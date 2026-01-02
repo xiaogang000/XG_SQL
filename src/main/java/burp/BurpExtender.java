@@ -780,8 +780,8 @@ public class BurpExtender extends AbstractTableModel implements IBurpExtender, I
                         if (payload == "''''" || payload == "#xxgg}" || payload == "/1" || payload == "/*xxgg*/") {
                             change_2 = requestResponse.getResponse().length;
                             if (change_1 != change_2) {
-                                    change_sign = "✔ " + (change_1 - change_2);
-                                    change_sign_1 = "✔ ";
+                                change_sign = "✔ " + (change_1 - change_2);
+                                change_sign_1 = "✔ ";
                             } else {
                                 change_sign = "";
                             }
