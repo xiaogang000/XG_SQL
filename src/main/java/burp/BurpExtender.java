@@ -1048,13 +1048,16 @@ public class BurpExtender extends AbstractTableModel implements IBurpExtender, I
                                 if (change_length_1 != change_length_2) {
                                     change_sign_2 = "✔ " + (change_length_1 - change_length_2);
                                     change_sign_1 = "✔ ";
+                                } else{
+                                    change_sign_2 = "";
+                                }
+                            }
+                            else {
+                                if (time_2 - time_1 >= 3000) {
+                                    change_sign_2 = "time > 3";
+                                    change_sign_1 = "✔";
                                 } else {
-                                    if (time_2 - time_1 >= 3000) {
-                                        change_sign_2 = "time > 3";
-                                        change_sign_1 = "✔";
-                                    } else {
-                                        change_sign_2 = "diy payload";
-                                    }
+                                    change_sign_2 = "diy payload";
                                 }
                             }
                         }
