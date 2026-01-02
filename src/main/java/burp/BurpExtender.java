@@ -51,7 +51,7 @@ public class BurpExtender extends AbstractTableModel implements IBurpExtender, I
     boolean is_Zpayload = false;//自定义payload开关
     String static_file = "jpg,jpeg,png,gif,ico,css,js,svg,pdf,mp3,mp4,avi,ttf,woff,woff2";
     String[] static_file_list;
-    String page_str = "page,pages,pageno,pageindex,pagesize,rows,size";
+    String page_str = "page,pages,pageno,pageindex,pagesize,pagenum,rows,size";
     String[] page_list;
     String order_str = "order,orderBy,groupBy,sort,sortBy,desc,asc,table,column";
     String[] order_list;
@@ -712,12 +712,12 @@ public class BurpExtender extends AbstractTableModel implements IBurpExtender, I
                         String payload_json;
 
                         if(para.getValue().contains("true")||para.getValue().contains("false")||para.getValue().contains("null")){
-                            payload_json = "\""+payload+"\"";
+                            payload_json = "\""+escapeJsonString(payload)+"\"";
                         }else{
                             if(request_raw[valueStart-1]==34){
-                                payload_json = para.getValue()+payload;
+                                payload_json = para.getValue()+escapeJsonString(payload);
                             }else {
-                                payload_json = "\""+para.getValue()+payload+"\"";
+                                payload_json = "\""+escapeJsonString(para.getValue()+payload)+"\"";
                             }
                         }
                         byte[] new_Requests_raw = new byte[request_raw.length-para.getValue().length()+payload_json.length()];
@@ -780,8 +780,8 @@ public class BurpExtender extends AbstractTableModel implements IBurpExtender, I
                         if (payload == "''''" || payload == "#xxgg}" || payload == "/1" || payload == "/*xxgg*/") {
                             change_2 = requestResponse.getResponse().length;
                             if (change_1 != change_2) {
-                                    change_sign = "✔ " + (change_1 - change_2);
-                                    change_sign_1 = "✔ ";
+                                change_sign = "✔ " + (change_1 - change_2);
+                                change_sign_1 = "✔ ";
                             } else {
                                 change_sign = "";
                             }
@@ -990,12 +990,12 @@ public class BurpExtender extends AbstractTableModel implements IBurpExtender, I
                         int GG_valueEnd = GG_para.getValueEnd();
                         String GG_payload_json;
                         if(GG_value_raw.contains("true")||GG_value_raw.contains("false")||GG_value_raw.contains("null")){
-                            GG_payload_json = "\""+payload+"\"";
+                            GG_payload_json = "\""+escapeJsonString(payload)+"\"";
                         }else{
                             if(GG_raw[GG_valueStart-1]==34){
-                                GG_payload_json = GG_value_raw+payload;
+                                GG_payload_json = GG_value_raw+escapeJsonString(payload);
                             }else {
-                                GG_payload_json = "\""+GG_value_raw+payload+"\"";
+                                GG_payload_json = "\""+escapeJsonString(GG_value_raw+payload)+"\"";
                             }
                         }
                         byte[] GG_new_Requests_raw = new byte[GG_raw.length-GG_value_raw.length()+GG_payload_json.length()];
@@ -1385,6 +1385,43 @@ public class BurpExtender extends AbstractTableModel implements IBurpExtender, I
             }
         }
         return positions;
+    }
+
+    public static String escapeJsonString(String str) {
+        if (str == null) return null;
+        StringBuilder sb = new StringBuilder();
+        for (char c : str.toCharArray()) {
+            switch (c) {
+                case '"':
+                    sb.append("\\\"");
+                    break;
+                case '\\':
+                    sb.append("\\\\");
+                    break;
+                case '\b':
+                    sb.append("\\b");
+                    break;
+                case '\f':
+                    sb.append("\\f");
+                    break;
+                case '\n':
+                    sb.append("\\n");
+                    break;
+                case '\r':
+                    sb.append("\\r");
+                    break;
+                case '\t':
+                    sb.append("\\t");
+                    break;
+                default:
+                    if (c < 0x20) {
+                        sb.append(String.format("\\u%04x", (int) c));
+                    } else {
+                        sb.append(c);
+                    }
+            }
+        }
+        return sb.toString();
     }
 
 }
