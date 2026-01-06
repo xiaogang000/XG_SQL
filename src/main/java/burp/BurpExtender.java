@@ -16,7 +16,7 @@ import java.util.List;
 
 public class BurpExtender extends AbstractTableModel implements IBurpExtender, ITab, IHttpListener, IScannerCheck, IMessageEditorController, IContextMenuFactory {
 
-    String version = "1.5.2";
+    String version = "1.5.3";
     private final List<LogEntry> log_raw = new ArrayList<LogEntry>();//记录原始流量
     private final List<LogEntry> log2 = new ArrayList<LogEntry>();//记录攻击流量
     private final List<LogEntry> log_show = new ArrayList<LogEntry>();//用于展现
@@ -781,8 +781,8 @@ public class BurpExtender extends AbstractTableModel implements IBurpExtender, I
                         if (payload == "''''" || payload == "#xxgg}" || payload == "/1" || payload == "/*xxgg*/") {
                             change_2 = requestResponse.getResponse().length;
                             if (change_1 != change_2) {
-                                    change_sign = "✔ " + (change_1 - change_2);
-                                    change_sign_1 = "✔ ";
+                                change_sign = "✔ " + (change_1 - change_2);
+                                change_sign_1 = "✔";
                             } else {
                                 change_sign = "";
                             }
@@ -817,6 +817,7 @@ public class BurpExtender extends AbstractTableModel implements IBurpExtender, I
                     int add_order_length = requestResponse.getResponse().length;
                     if (raw_length != add_order_length){
                         change_sign = "!! "+(raw_length-add_order_length);
+                        change_sign_1 = "✔";
                     }else {
                         change_sign = "";
                     }
@@ -834,6 +835,7 @@ public class BurpExtender extends AbstractTableModel implements IBurpExtender, I
                         int add_order_length = requestResponse.getResponse().length;
                         if (raw_length != add_order_length){
                             change_sign = "!! "+(raw_length-add_order_length);
+                            change_sign_1 = "✔";
                         }else {
                             change_sign = "";
                         }
@@ -864,6 +866,7 @@ public class BurpExtender extends AbstractTableModel implements IBurpExtender, I
                             int add_order_length = requestResponse.getResponse().length;
                             if (raw_length != add_order_length){
                                 change_sign = "!! "+(raw_length-add_order_length);
+                                change_sign_1 = "✔";
                             }else {
                                 change_sign = "";
                             }
@@ -925,7 +928,7 @@ public class BurpExtender extends AbstractTableModel implements IBurpExtender, I
                 String encode;
                 if(value_raw.startsWith("{\"")||value_raw.startsWith("[{\"")){
                     encode = "NO";
-                }else if (value_raw.startsWith("%7b")||value_raw.startsWith("%5b%7b")){
+                }else if (value_raw.startsWith("%7b")||value_raw.startsWith("%7B")||value_raw.startsWith("%5b%7b")||value_raw.startsWith("%5B%7B")||value_raw.startsWith("%5b%7B")||value_raw.startsWith("%5B%7b")){
                     value_raw = decodeUrl(value_raw, StandardCharsets.ISO_8859_1);
                     encode = "URL";
                 }else if(value_raw.startsWith("{\\\"")||value_raw.startsWith("[{\\\"")){
@@ -1053,7 +1056,7 @@ public class BurpExtender extends AbstractTableModel implements IBurpExtender, I
                                 change_length_2 = requestResponse.getResponse().length;
                                 if (change_length_1 != change_length_2) {
                                     change_sign_2 = "✔ " + (change_length_1 - change_length_2);
-                                    change_sign_1 = "✔ ";
+                                    change_sign_1 = "✔";
                                 } else{
                                     change_sign_2 = "";
                                 }

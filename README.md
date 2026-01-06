@@ -40,6 +40,10 @@ SQL注入辅助判断工具，基于xiasql二开，原版链接：https://github
 
 ## 更新记录
 
+(20260106): XG_SQL V1.5.3
+
+1、更新两个小bug
+
 (20260102): XG_SQL V1.5.2
 
 1、增加值为json数据的扫描，支持GET、POST、JSON请求参数内嵌json数据

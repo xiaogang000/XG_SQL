@@ -6,7 +6,7 @@
 
     <groupId>org.example</groupId>
     <artifactId>XG_SQL</artifactId>
-    <version>V1.5.2</version>
+    <version>V1.5.3</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
